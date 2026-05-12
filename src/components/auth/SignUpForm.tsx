@@ -37,50 +37,57 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-busy={isLoading}>
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="signup-email">Email</Label>
         <Input
-          id="email"
+          id="signup-email"
           type="email"
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           disabled={isLoading}
+          autoComplete="email"
+          aria-invalid={!!error || undefined}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="signup-password">Password</Label>
         <Input
-          id="password"
+          id="signup-password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           disabled={isLoading}
           minLength={8}
+          autoComplete="new-password"
+          aria-describedby="signup-password-hint"
+          aria-invalid={!!error || undefined}
         />
-        <p className="text-xs text-gray-500">
+        <p id="signup-password-hint" className="text-xs text-gray-500">
           Must be at least 8 characters long
         </p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <Label htmlFor="signup-confirm-password">Confirm Password</Label>
         <Input
-          id="confirmPassword"
+          id="signup-confirm-password"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           disabled={isLoading}
+          autoComplete="new-password"
+          aria-invalid={!!error || undefined}
         />
       </div>
 
       {error && (
-        <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+        <div role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
           {error}
         </div>
       )}

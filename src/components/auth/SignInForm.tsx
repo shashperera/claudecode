@@ -31,34 +31,38 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-busy={isLoading}>
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="signin-email">Email</Label>
         <Input
-          id="email"
+          id="signin-email"
           type="email"
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           disabled={isLoading}
+          autoComplete="email"
+          aria-invalid={!!error || undefined}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="signin-password">Password</Label>
         <Input
-          id="password"
+          id="signin-password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           disabled={isLoading}
+          autoComplete="current-password"
+          aria-invalid={!!error || undefined}
         />
       </div>
 
       {error && (
-        <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+        <div role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
           {error}
         </div>
       )}
